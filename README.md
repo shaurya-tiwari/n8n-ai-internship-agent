@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/github/explore/main/topics/automation/automation.png" width="120" />
+<img src="https://media.giphy.com/media/l0HlNaQ6gWfllcjDO/giphy.gif" width="100%"/>
 </p>
+
 
 <h1 align="center">🤖 AI Internship Agent</h1>
 
