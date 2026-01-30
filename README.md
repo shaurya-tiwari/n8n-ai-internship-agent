@@ -94,6 +94,11 @@ Telegram Notification
 
 ---
 
+## 📸 Screenshots
+![Workflow](screenshots/workflow.png)
+![Telegram Output](screenshots/telegram.png)
+
+
 ## 📬 Sample Output
 🔥 Fresh Internship Matches (Resume-Based)
 
