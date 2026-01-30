@@ -95,8 +95,11 @@ Telegram Notification
 ---
 
 ## 📸 Screenshots
-![Workflow](screenshots/workflow.png)
-![Telegram Output](screenshots/response.png)
+
+| n8n Workflow (AI Agent Logic) | Telegram Output |
+|------------------------------|----------------|
+| ![Workflow](screenshots/workflow.png) | ![Telegram Output](screenshots/response.png) |
+
 
 
 ## 📬 Sample Output
