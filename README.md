@@ -96,7 +96,7 @@ Telegram Notification
 
 ## 📸 Screenshots
 ![Workflow](screenshots/workflow.png)
-![Telegram Output](screenshots/telegram.png)
+![Telegram Output](screenshots/response.png)
 
 
 ## 📬 Sample Output
