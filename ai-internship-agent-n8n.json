@@ -1,0 +1,193 @@
+{
+  "name": "intrnsssss",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -16
+      ],
+      "id": "f5ba2c14-04e7-4247-9aeb-0c7a556a4348",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "upload-resume-html",
+        "options": {
+          "binaryPropertyName": "file"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -352,
+        -16
+      ],
+      "id": "3790aebb-f185-48a8-941a-9d8174790dc4",
+      "name": "Webhook",
+      "webhookId": "30ec9b49-d31f-4e18-918b-dac883951646"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "binaryPropertyName": "file0",
+        "destinationKey": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "26a5ab88-90fa-494c-9762-260863cf9ae7",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d3468ddc-c786-446e-8ab3-8f013e489069",
+              "name": "plain_text",
+              "value": "={{ $json.text   .replace(/<style[\\s\\S]*?<\\/style>/gi, '')   .replace(/<script[\\s\\S]*?<\\/script>/gi, '')   .replace(/<[^>]+>/g, ' ')   .replace(/\\s+/g, ' ')   .trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        64,
+        -16
+      ],
+      "id": "fa3081af-92a9-4705-bf7b-b1b0ff45fa97",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an AI resume analyzer.\n\nAnalyze the resume text below and return ONLY valid JSON.\nDo not add explanations, markdown, or extra text.\n\nExtract:\n- name\n- email\n- phone (if available)\n- experience_level (student / fresher / experienced)\n- skills (array)\n- tools_and_technologies (array)\n- suitable_internship_roles (array)\n- relevant_domains (array)\n\nResume text:\n{{ $json.plain_text }}\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        -16
+      ],
+      "id": "8a0f6643-2abd-40a1-bc32-56768b76e0cb",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "7LjVSh9P4Yya4ODB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9552df64-7d01-4db9-9c96-5dbe96bc3458",
+              "name": "resume",
+              "value": "={{\n  JSON.parse(\n    $json.content.parts[0].text\n      .replace(/```json/g, '')\n      .replace(/```/g, '')\n      .trim()\n  )\n}}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -16
+      ],
+      "id": "dabda718-e7b9-47dd-b68d-62584877e6af",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "0664e4c6-b1fb-42e2-b398-22bf9835af1d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c1534fc3ab772ad8d4b5d608db654806d9f9bc9d93c2f7b4f78a55244f5623de"
+  },
+  "id": "-wR_7EEcfyrVdDYMw5AJS",
+  "tags": []
+}
